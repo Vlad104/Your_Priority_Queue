@@ -13,6 +13,7 @@ export default {
 <style>
 body {
   background-color: #181E24;
+  outline: none;
 }
 
 #app {
@@ -23,4 +24,14 @@ body {
   color: #2863b3;
   margin-top: 60px;
 }
+
+input {
+  outline: none;
+}
+
+a {
+  text-decoration: none;
+  user-select: none;
+}
+
 </style>

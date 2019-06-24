@@ -11,6 +11,11 @@ export default {
 </script>
 
 <style>
+
+html {
+  font-size: 20px;
+}
+
 body {
   background-color: #181E24;
   outline: none;

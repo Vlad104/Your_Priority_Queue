@@ -59,13 +59,14 @@ export default {
 #today {
   user-select: none;
   display: block;
-  width: 200px;
+  width: 25%;
   height: 600px;
   border: 1px;
   margin: 0 3% 0 3%;
 }
 
 .title {
+  padding-bottom: 10px;
   border-bottom: 2px #2863b3 solid;
 }
 
@@ -93,9 +94,8 @@ export default {
 .task__text  {
   display: inline-block;
   position: relative;
+  left: 1em;
   vertical-align: top;
-  left: 50%;
-  transform: translate(calc(-50% - 1em));
 }
 
 .task__delete {
@@ -108,25 +108,56 @@ export default {
 }
 
 .input-area {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .input-text {
   background-color: #181E24;
-  height: 1.8em;
-  width: 80%;
+  height: 1.6rem;
+  width: 70%;
   border: 1px solid #bb6222;
   border-radius: 5px;
   color: #bb6222;
   padding: 0 0 0 15px;
+  font-size: 0.9rem;
 }
 
 .input-button {
-  width: 1.8em;
-  height: 1.8em;
-  border: 1px solid #bb6222;
+  width: 1.6rem;
+  height: 1.6rem;
+  border: 2px solid #bb6222;
   border-radius: 50%;
+  background-color: #181E24;
+}
+
+.input-button::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 2px;
+  border: 1px solid #bb6222;
   background-color: #bb6222;
+  transform: translate(-50%, -50%);
+  transform: rotate(0deg);
+}
+
+.input-button::after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  height: 100%;
+  width: 2px;
+  border: 1px solid #bb6222;
+  background-color: #bb6222;
+  transform: translate(-50%, -50%);
+  transform: rotate(90deg);
 }
 
 </style>

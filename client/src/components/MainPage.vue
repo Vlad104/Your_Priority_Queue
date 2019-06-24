@@ -40,7 +40,9 @@ export default {
 .tasks {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  padding: 0 3% 0 3%;
 }
 
 </style>

@@ -16,6 +16,20 @@ function getFetch(path = "/") {
 }
 
 /**
+ * Выполнить DELETE-запрос с помощью FetchAPI
+ * @param {string} path
+ * return {Promise<Responce>}
+ */
+function deleteFetch(path = "/") {
+  return fetch(apiURL + path, {
+    method: "DELETE",
+    mode: "cors",
+    credentials: "include",
+    body: null
+  });
+}
+
+/**
  * Выполнить POST-запрос с помощью FetchAPI
  * @param {path} string
  * @param {Object} body Тело запроса
@@ -60,78 +74,12 @@ export function getPosts() {
 }
 
 
-let res = {
-  'today': [
-    {
-      id: 0,
-      text: 'Поесть дошик',
-    },
-    {
-      id: 1,
-      text: 'Попить пива',
-    },
-    {
-      id: 2,
-      text: 'Поесть дошик',
-    },
-    {
-      id: 3,
-      text: 'Попить пива',
-    },
-    {
-      id: 4,
-      text: 'Поесть дошик',
-    },
-  ],
-  'tomorrow': [
-    {
-      id: 0,
-      text: 'Поесть дошик',
-    },
-    {
-      id: 1,
-      text: 'Попить пива',
-    },
-  ],
-  'soon': [
-    {
-      id: 0,
-      text: 'Поесть дошик',
-    },
-    {
-      id: 1,
-      text: 'Попить пива',
-    },
-  ],
-  'notsoon': [
-    {
-      id: 0,
-      text: 'Поесть дошик',
-    },
-    {
-      id: 1,
-      text: 'Попить пива',
-    },
-  ],
-  'ideas': [
-    {
-      id: 0,
-      text: 'Поесть дошик',
-    },
-    {
-      id: 1,
-      text: 'Попить пива',
-    },
-  ],
-}
-
 /**
  * Сделать запрос и вернуть список задач для конкретного списка
  * @param {String} slug Slug запроса
  * return {Array<Object>} // Список задач
  */
 export async function getTasks(slug) {
-  return res[slug];
   try {
     const res = await getFetch(`/tasks/${slug}`);
     const status = await checkStatus(res);
@@ -149,7 +97,15 @@ export async function getTasks(slug) {
  * return {Array<Object>} // Список задач
  */
 export async function postTask(slug, task) {
-  res[slug].push(task);
+  try {
+    const res = await postFetch(`/tasks/${slug}`, {task});
+    const status = await checkStatus(res);
+    const data = await parseJSON(status);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
 }
 
 /**
@@ -158,5 +114,13 @@ export async function postTask(slug, task) {
  * return {Array<Object>} // Список задач
  */
 export async function delTask(slug, id) {
-  res[slug].splice(id, 1);
+  try {
+    const res = await deleteFetch(`/tasks/${slug}/${id}`);
+    const status = await checkStatus(res);
+    const data = await parseJSON(status);
+    return data;
+  } catch (err) {
+    console.log(err);
+    return err;
+  }
 }

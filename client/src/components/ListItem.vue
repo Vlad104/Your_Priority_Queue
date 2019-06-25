@@ -5,7 +5,11 @@
       <div class="task" v-for="task in tasks" :key="task.id">
         <div class="task__field"></div>
         <div class="task__text"> {{ task.text }} </div>
-        <div class="task__delete" v-on:click="onDeleteTask(task.id)"></div>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="task__delete" v-on:click="onDeleteTask(task.id)">
+          <path fill-rule="evenodd" d="M12.437 6a.463.463 0 0 1 .464.489l-.367 6.679c0 1.104-.914 1.84-2.018 1.84H5.548c-1.103 0-2.017-.686-2.017-1.79l-.436-6.724A.462.462 0 0 1 3.558 6h8.879zM2.128 5a.529.529 0 0 1-.531-.525l.001-.012c0-.414.251-.769.608-.922.455-.241 1.681-.439 3.292-.542V1.41C5.498.632 6.13 0 6.908 0h2.184c.778 0 1.41.632 1.41 1.41v1.589c1.611.103 2.837.301 3.292.542.357.153.608.508.608.922 0 .297-.24.537-.537.537H2.128zm6.571-3.407H7.301A.301.301 0 0 0 7 1.894v1.041a46.454 46.454 0 0 1 2 0V1.894a.301.301 0 0 0-.301-.301z"/>
+        </svg>
+        <!-- <div class="task__delete" v-on:click="onDeleteTask(task.id)">
+        </div> -->
       </div>
     </div>
     <div class="input-area">
@@ -43,6 +47,7 @@ export default {
       data.text = this.text;
       await postTask(this.slug, data);
       this.text = '';
+      this.setTasks();
     },
     async onDeleteTask(id) {
       console.log(id);
@@ -76,11 +81,16 @@ export default {
 
 .task {
   display: block;
+  position: relative;
   margin: 20px auto;
   color: #bb6222;
   height: 1em;
   width: 100%;
 }
+
+/* .task:hover {
+  fill: #bb622260; 
+} */
 
 .task__field {
   display: inline-block;
@@ -98,14 +108,46 @@ export default {
   vertical-align: top;
 }
 
-.task__delete {
-  position: relative;
-  top: calc(-50% - 1px);
-  left: 90%;
-  width: 10px;
-  height: 3px;
-  background-color: #bb6222;
+.task__text:hover {
+  color: #bb622260;
+  border-color: #bb622260;
 }
+
+.task__text::before {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background: #bb622260;
+  top: calc(50% - 1px);
+  left: 0;
+}
+
+.task__text:hover::before {
+  color: #bb622260;
+  border-color: #bb622260;
+  animation: canceling 1s ease-out 0s 1 normal forwards running;
+}
+
+@keyframes canceling {
+  0% {width: 0;}
+  100% {width: 100%;}
+}
+
+.task__delete {
+  position: absolute;
+  top: 50%;
+  right: 0.8rem;
+  transform: translate(50%, -50%);
+  width: 1rem;
+  height: 1rem;
+  fill: #bb6222;
+}
+
+.task__delete:hover {
+  fill: #bb622260;
+}
+
 
 .input-area {
   display: flex;
@@ -116,7 +158,7 @@ export default {
 .input-text {
   background-color: #181E24;
   height: 1.6rem;
-  width: 70%;
+  width: calc(100% - 3.2rem);
   border: 1px solid #bb6222;
   border-radius: 5px;
   color: #bb6222;

@@ -84,7 +84,7 @@ export async function getTasks(slug) {
     const res = await getFetch(`/tasks/${slug}`);
     const status = await checkStatus(res);
     const data = await parseJSON(status);
-    return data;
+    return data.tasks;
   } catch (err) {
     console.log(err);
     return err;

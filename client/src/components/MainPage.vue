@@ -2,6 +2,10 @@
   <div id="main">
     <h1 class="app-name">Your Priority Queue</h1>
     <h1 class="hello-title">Добрый день, Владислав!</h1>
+    <div class="date-time">
+      <a class="time">{{ date }}</a>
+      <a class="time">{{ time }}</a>
+    </div>
     <div class="tasks">
       <ListItem 
         v-for="item in taskItems" 
@@ -27,7 +31,20 @@ export default {
         // {id: 3, slug: 'notsoon', title: 'Не скоро'},
         // {id: 4, slug: 'ideas', title: 'Идеи'},
       ],
+      time: 0,
+      date: 0,
     };
+  },
+  mounted() {
+    setTimeout(this.getDateTime, 0);
+    setInterval(this.getDateTime, 30000);
+  },
+  methods: {
+    getDateTime() {
+      const d = new Date();
+      this.time = ('0' + d.getHours()).slice(-2) + ':' + ('0' + d.getMinutes()).slice(-2);
+      this.date = ('0' + d.getDate()).slice(-2) + '/' + ('0' + (d.getMonth() + 1)).slice(-2);
+    },
   },
   components: {
     ListItem,
@@ -51,6 +68,13 @@ export default {
   justify-content: space-between;
   flex-wrap: wrap;
   padding: 0 3% 0 3%;
+}
+
+.date-time {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  font-size: 1.4rem;
 }
 
 </style>

@@ -43,7 +43,6 @@ export default {
         return;
       }
       const data = {};
-      data.id = this.tasks[this.tasks.length-1].id + 1;
       data.text = this.text;
       await postTask(this.slug, data);
       this.text = '';
